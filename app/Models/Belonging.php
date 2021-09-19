@@ -19,6 +19,7 @@ class Belonging extends Model
         'color_name',
         'notes',
         'slot_id',
+        'code',
     ];
 
     public function size(){
@@ -30,4 +31,8 @@ class Belonging extends Model
         return $this->belongsTo(BelongingType::class, 'belonging_type_id');
     }
 
+    public function slot()
+    {
+        return $this->belongsTo(Slot::class);
+    }
 }

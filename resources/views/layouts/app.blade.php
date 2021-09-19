@@ -327,14 +327,15 @@
                   placeholder="Search for belonging, person, phone, email, etc..."
                   aria-label="Search"
                 />
-                <div id="search_dropdown" class="absolute top-full w-full py-2 bg-white shadow-sm px-4">
+                <div id="search_dropdown" class="absolute top-full w-full py-2 bg-white dark:bg-gray-800 shadow-sm px-4">
                     
+                    <div id="code_search_container"></div>
                     <div id="person_search_container"></div>
                     <div id="email_search_container"></div>
                     <div id="phone_search_container"></div>
                     <div id="slot_search_container"></div>
                     <div class="hidden" id="search_element_cloner">
-                        <a class="element block py-2 px-4 text-gray-500 hover:bg-gray-100 cursor-pointer">
+                        <a class="element block py-2 px-4 text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer">
                             
                         </a>
                     </div>
@@ -346,6 +347,7 @@
                     var search_persons_container = document.getElementById('person_search_container');
                     var search_emails_container = document.getElementById('email_search_container');
                     var search_phones_container = document.getElementById('phone_search_container');
+                    var search_codes_container = document.getElementById('code_search_container');
                     var search_slots_container = document.getElementById('slot_search_container');
                     var search_dropdown = document.getElementById('search_dropdown');
                     search_input.addEventListener('focus',function(){
@@ -358,50 +360,63 @@
                       return;
                     }
                     search_dropdown.classList.remove('hidden');
-                    if(this.value.length % 3 == 0){
-                        return
-                    }
+                    
                     var self = this;
                     var xhttp = new XMLHttpRequest();
                     xhttp.onreadystatechange = function() {
                         if (this.readyState == 4 && this.status == 200) {
                             search_persons_container.innerHTML = "";
                             search_emails_container.innerHTML = "";
+                            search_codes_container.innerHTML = "";
                             search_phones_container.innerHTML = "";
                             search_slots_container.innerHTML = "";
                             var data = JSON.parse(xhttp.responseText);
-                            console.log(data);
                             var persons = data.name;
                             var emails = data.email;
                             var phones = data.phone;
+                            var codes = data.code;
                             if(persons){
                                 for(let i = 0; i<persons.length; i++){
                                     var element = search_cloner.querySelector('a').cloneNode(true);
-                                    element.innerHTML = persons[i].name.toLowerCase().replace(self.value.toLowerCase(),`<span class='font-bold text-black'>${self.value}</span>`);
+                                    element.setAttribute("href","/belonging/"+persons[i].id);
+                                    element.innerHTML = persons[i].name.toLowerCase().replace(self.value.toLowerCase(),`<span class='font-bold text-black dark:text-white'>${self.value}</span>`);
                                     element.innerHTML += " | " + persons[i].phone;
                                     element.innerHTML += " | " + persons[i].type.name;
-                                    element.innerHTML += " | " + persons[i].size.name;
+                                    element.innerHTML += " | " + persons[i].code;
                                     search_persons_container.appendChild(element);
                                 }
                             }
                             if(emails){
                                 for(let i = 0; i<emails.length; i++){
                                     var element = search_cloner.querySelector('a').cloneNode(true);
-                                    element.innerHTML = emails[i].email.toLowerCase().replace(self.value.toLowerCase(),`<span class='font-bold text-black'>${self.value}</span>`);
+                                    element.setAttribute("href","/belonging/"+emails[i].id);
+                                    element.innerHTML = emails[i].email.toLowerCase().replace(self.value.toLowerCase(),`<span class='font-bold text-black dark:text-white'>${self.value}</span>`);
                                     element.innerHTML += " | " + emails[i].name;
                                     element.innerHTML += " | " + emails[i].type.name;
-                                    element.innerHTML += " | " + emails[i].size.name;
+                                    element.innerHTML += " | " + emails[i].code;
                                     search_emails_container.appendChild(element);
                                 }
                             }
                             if(phones){
                                 for(let i = 0; i<phones.length; i++){
                                     var element = search_cloner.querySelector('a').cloneNode(true);
+                                    element.setAttribute("href","/belonging/"+phones[i].id);
                                     element.innerHTML =  phones[i].name; 
-                                    element.innerHTML += " | " + phones[i].phone.replace(self.value,`<span class='font-bold text-black'>${self.value}</span>`);
+                                    element.innerHTML += " | " + phones[i].phone.replace(self.value,`<span class='font-bold text-black dark:text-white'>${self.value}</span>`);
                                     element.innerHTML += " | " + phones[i].type.name;
-                                    element.innerHTML += " | " + phones[i].size.name;
+                                    element.innerHTML += " | " + phones[i].code;
                                     search_phones_container.appendChild(element);
+                                }
+                            }
+                            if(codes){
+                                for(let i = 0; i<codes.length; i++){
+                                    var element = search_cloner.querySelector('a').cloneNode(true);
+                                    element.setAttribute("href","/belonging/"+codes[i].id);
+                                    element.innerHTML =  codes[i].name; 
+                                    element.innerHTML += " | " + codes[i].code.replace(self.value,`<span class='font-bold text-black dark:text-white'>${self.value}</span>`);
+                                    element.innerHTML += " | " + codes[i].type.name;
+                                    element.innerHTML += " | " + codes[i].size.name;
+                                    search_codes_container.appendChild(element);
                                 }
                             }
                         }

@@ -50,11 +50,29 @@ class BelongingController extends Controller
         $belonging->belonging_type_id = $request->type;
         $belonging->belonging_size_id = $request->size;
         $belonging->color_name = $request->color_name;
+
+
         if($request->has('notes'))
             $belonging->notes = $request->notes;
         $belonging->slot_id = $request->slot_id;
+
+        $slot = Slot::where('id',$request->slot_id)->first();
+        $slots_count = count(Belonging::where('slot_id',$slot->id)->get());
+        $code = $slots_count + 1;
+
+        $belonging->code = $slot->name ."-" . $code;
+        
         $belonging->save();
-        return redirect()->back()->with('success','Belonging has been added to the Vault!');
+        return redirect()->back()->with('success','Belonging has been added to the Vault! | Belonging Code: '.$belonging->code);
+    }
+    public function belonging($id)
+    {
+        $belonging = Belonging::where('id',$id)
+        ->with('slot')
+        ->with('size')
+        ->with('type')
+        ->first();
+        return view('belonging', ['belonging' => $belonging]);
     }
 
 }

@@ -33,6 +33,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/add', [BelongingController::class, 'store']);
 
     Route::get('/belongings', [BelongingController::class, 'view'])->name('view');
+    Route::get('/belonging/{id}', [BelongingController::class, 'belonging'])->name('belonging');
 
     Route::get('/slots', [SlotController::class, 'index'])->name('slots');
 

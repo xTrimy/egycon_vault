@@ -16,6 +16,7 @@ class SearchController extends Controller
         $colors = Belonging::where('color_name', 'LIKE', "%{$request->q}%")->with('type')->with('size')->limit(5)->get();
         $phone = Belonging::where('phone', 'LIKE', "%{$request->q}%")->with('type')->with('size')->limit(5)->get();
         $email = Belonging::where('email', 'LIKE', "%{$request->q}%")->with('type')->with('size')->limit(5)->get();
-        return ["name"=>$persons,"color"=>$colors,'phone'=>$phone, 'email' => $email];
+        $code = Belonging::where('code', 'LIKE', "%{$request->q}%")->with('type')->with('size')->limit(5)->get();
+        return ["name"=>$persons,"color"=>$colors,'phone'=>$phone, 'email' => $email,'code'=>$code];
     }
 }
