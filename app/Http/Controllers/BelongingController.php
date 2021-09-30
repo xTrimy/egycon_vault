@@ -28,6 +28,8 @@ class BelongingController extends Controller
         $belongings = Belonging::with('size')->with('type')->paginate(15);
         return view('belongings', ['belongings' => $belongings]);
     }
+
+
     public function store(Request $request)
     {
         $request->validate([
