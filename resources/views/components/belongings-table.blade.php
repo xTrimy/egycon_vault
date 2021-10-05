@@ -4,6 +4,7 @@
                       class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
                     >
                       <th class="px-4 py-3">Belonging Info</th>
+                      <th class="px-4 py-3">Visitor Type</th>
                       <th class="px-4 py-3">Color</th>
                       <th class="px-4 py-3">Email</th>
                       <th class="px-4 py-3">Phone</th>
@@ -42,6 +43,9 @@
                             </p>
                           </div>
                         </div>
+                      </td>
+                      <td class="px-4 py-3 text-sm font-bold" style="color:{{ $belonging->visitor }}">
+                        {{ $belonging->visitor->name }}
                       </td>
                       <td class="px-4 py-3 text-sm font-bold" style="color:{{ $belonging->color }}">
                         {{ $belonging->color_name }}

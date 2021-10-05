@@ -78,6 +78,29 @@ Add To Vault
               <div class="mt-4 text-sm">
                 <span class="text-gray-700 dark:text-gray-400">
                 <i class="las la-briefcase text-xl"></i>
+                Visitor Type
+                </span>
+                <div class="mt-2">
+                    @foreach ($visitor as $visitor)
+                    <label
+                    class="inline-flex items-center text-gray-600 dark:text-gray-400"
+                  >
+                    <input
+                    @if(old('visitor') == $visitor->id)
+                    checked
+                    @endif
+                      type="radio"
+                      class="text-purple-600 border-2 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                      name="visitor"
+                      value="{{ $visitor->id }}"
+                    />
+                    <span class="ml-2">{{ $visitor->name }}</span>
+                  </label>
+                    @endforeach
+                </div>
+              <div class="mt-4 text-sm">
+                <span class="text-gray-700 dark:text-gray-400">
+                <i class="las la-briefcase text-xl"></i>
                 Belonging Type
                 </span>
                 <div class="mt-2">
