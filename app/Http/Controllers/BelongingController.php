@@ -7,6 +7,8 @@ use App\Models\BelongingSize;
 use App\Models\BelongingType;
 use App\Models\Slot;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Postmark\PostmarkClient;
 use stdClass;
 
 class BelongingController extends Controller
@@ -65,6 +67,17 @@ class BelongingController extends Controller
         $belonging->code = $slot->name ."-" . $code;
         
         $belonging->save();
+
+        $client = new PostmarkClient(env("POSTMARK_SECRET"));
+        $sendResult = $client->sendEmailWithTemplate(
+                        "info@gamerslegacy.net",
+                        request('email'),
+                        25356257,
+                        [
+                            "name" => request('name'),
+                        ]
+                    );
+        
         return redirect()->back()->with('success','Belonging has been added to the Vault! | Belonging Code: '.$belonging->code);
     }
     public function belonging($id)
