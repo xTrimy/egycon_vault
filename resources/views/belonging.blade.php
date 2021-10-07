@@ -22,6 +22,10 @@ belongings
                     <td>{{$belonging->name}}</td>
                   </tr>
                   <tr>
+                    <th class="w-24 text-right pr-4">Type: </th>
+                    <td>{{$belonging->visitor->name}}</td>
+                  </tr>
+                  <tr>
                     <th class="w-24 text-right pr-4">Email: </th>
                     <td>{{$belonging->email}}</td>
                   </tr>

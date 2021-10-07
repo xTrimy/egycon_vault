@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Belonging;
 use App\Models\BelongingSize;
 use App\Models\BelongingType;
+use App\Models\VisitorType;
 use App\Models\Slot;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Postmark\PostmarkClient;
 use stdClass;
 
 class BelongingController extends Controller
@@ -14,13 +17,14 @@ class BelongingController extends Controller
     public function add(){
         $types = BelongingType::all();
         $sizes = BelongingSize::all();
+        $visitor = VisitorType::all();
         $slots = Slot::all();
         $slot_counts = [];
         foreach($slots as $slot){
             $count = count(Belonging::where('slot_id',$slot->id)->get());
             $slot_counts[$slot->name] = $count;
         }
-        return view('add-to-vault',['slots'=>$slots,'types'=>$types,'sizes'=>$sizes, 'slot_counts'=> $slot_counts]);
+        return view('add-to-vault',['slots'=>$slots,'types'=>$types,'sizes'=>$sizes,'visitor'=>$visitor, 'slot_counts'=> $slot_counts]);
     }
 
     public function view()
@@ -42,6 +46,7 @@ class BelongingController extends Controller
             "color_name"=>"required",
             "notes"=>"nullable",
             "slot_id" => "required|exists:slots,id",
+            "visitor"=>"required|exists:visitor_types,id",
         ]);
         $belonging = new Belonging();
         $belonging->name = $request->name;
@@ -51,6 +56,7 @@ class BelongingController extends Controller
         $belonging->status = "1";
         $belonging->belonging_type_id = $request->type;
         $belonging->belonging_size_id = $request->size;
+        $belonging->visitor_type_id = $request->visitor;
         $belonging->color_name = $request->color_name;
 
 
@@ -65,6 +71,17 @@ class BelongingController extends Controller
         $belonging->code = $slot->name ."-" . $code;
         
         $belonging->save();
+
+        // $client = new PostmarkClient(env("POSTMARK_SECRET"));
+        // $sendResult = $client->sendEmailWithTemplate(
+        //                 "info@gamerslegacy.net",
+        //                 request('email'),
+        //                 25356257,
+        //                 [
+        //                     "name" => request('name'),
+        //                 ]
+        //             );
+        
         return redirect()->back()->with('success','Belonging has been added to the Vault! | Belonging Code: '.$belonging->code);
     }
     public function belonging($id)

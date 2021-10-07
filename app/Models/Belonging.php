@@ -20,6 +20,7 @@ class Belonging extends Model
         'notes',
         'slot_id',
         'code',
+        'visitor_type_id',
     ];
 
     public function size(){
@@ -30,7 +31,10 @@ class Belonging extends Model
     {
         return $this->belongsTo(BelongingType::class, 'belonging_type_id');
     }
-
+    public function visitor()
+    {
+        return $this->belongsTo(VisitorType::class, 'visitor_type_id');
+    }
     public function slot()
     {
         return $this->belongsTo(Slot::class);
