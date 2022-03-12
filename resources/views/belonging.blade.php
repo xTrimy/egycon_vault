@@ -54,14 +54,14 @@ belongings
                         >
                           INSIDE
                         </span> 
-                        <a href="#"><span class="ml-2 text-purple-500 underline"> Change to outside</span></a>
+                        <a href="{{ route('status',['id' => $belonging->id]) }}"><span class="ml-2 text-purple-500 underline"> Change to outside</span></a>
                         @else
                         <span
                           class="px-2 py-1 font-semibold leading-tight text-yellow-700 bg-yellow-100 rounded-full dark:bg-yellow-700 dark:text-yellow-100"
                         >
                           OUTSIDE
                         </span>
-                        <a href="#"><span class="ml-2 text-purple-500 underline"> Change to inside</span></a>
+                        <a href="{{ route('status',['id' => $belonging->id]) }}"><span class="ml-2 text-purple-500 underline"> Change to inside</span></a>
                         @endif
                     </td>
                   </tr>
