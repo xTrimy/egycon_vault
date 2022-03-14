@@ -116,7 +116,7 @@
                           <a href="{{ route('belonging',$belonging->id) }}" style="display: block;">
                             <button
                               class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                              aria-label="Delete"
+                              aria-label="View"
                             >
                               <i class="fas fa-eye text-xl"></i>
                             </button>

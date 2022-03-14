@@ -109,5 +109,21 @@ class BelongingController extends Controller
         return view('belonging', ['belonging' => $belonging]);
     }
 
+    public function status($id){
+        print("helo");
+
+        $data = Belonging::find($id);
+        print($data);
+        if($data->status == 1){
+            $data->status = 0;
+        }
+        else if($data->status == 0){
+            $data->status = 1;
+        }
+
+        $data->save();
+        return redirect()->back()->with("Belonging Status changed!");
+    }
+
 }
 
