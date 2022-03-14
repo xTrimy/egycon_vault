@@ -33,7 +33,7 @@ class BelongingController extends Controller
 
     public function view()
     {
-        $belongings = Belonging::with('size')->with('type')->paginate(15);
+        $belongings = Belonging::with('size')->with('type')->with('slot')->orderBy('id','DESC')->get();
         return view('belongings', ['belongings' => $belongings]);
     }
 

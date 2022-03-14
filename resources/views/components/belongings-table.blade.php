@@ -7,6 +7,8 @@
                       <th class="px-4 py-3">Visitor Type</th>
                       <th class="px-4 py-3">Color</th>
                       <th class="px-4 py-3">Email</th>
+                        <th class="px-4 py-3">Slot</th>
+
                       <th class="px-4 py-3">Phone</th>
                       <th class="px-4 py-3">Status</th>
                       <th class="px-4 py-3">Date</th>
@@ -52,6 +54,9 @@
                       </td>
                       <td class="px-4 py-3 " >
                         {{ $belonging->email }}
+                      </td>
+                      <td class="px-4 py-3 " >
+                        {{ $belonging->code }}
                       </td>
                       <td class="px-4 py-3 " >
                         {{ $belonging->phone }}

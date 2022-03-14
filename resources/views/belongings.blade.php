@@ -22,7 +22,6 @@ Belongings
                 class="mt-4"
               >
                 <!-- Pagination -->
-                  {{ $belongings->links() }}
               </div>
             </div>
           </div>
