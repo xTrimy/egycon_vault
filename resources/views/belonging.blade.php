@@ -13,7 +13,16 @@ belongings
             >
               Belonging 
             </h2>
-            
+            @if(Session::has('success'))
+            <div
+              class="flex items-center justify-between px-4 p-2 mb-8 text-sm font-semibold text-green-600 bg-green-100 rounded-lg focus:outline-none focus:shadow-outline-purple"
+            >
+              <div class="flex items-center">
+                <i class="fas fa-check mr-2"></i>
+                <span>{{ Session::get('success') }}</span>
+              </div>
+            </div>
+            @endif
             <div class="w-full overflow-hidden rounded-lg shadow-xs">
               <div class="w-full overflow-x-auto bg-white dark:bg-gray-800 px-4 py-8">
                 <table class="w-full dark:text-white">
@@ -46,6 +55,10 @@ belongings
                     <td class="font-bold" style="color:{{$belonging->color}}">{{$belonging->color_name}}</td>
                   </tr>
                   <tr>
+                    <th class="w-24 text-right pr-4">Notes: </th>
+                    <td>{{$belonging->notes ? $belonging->notes : 'None'}}</td>
+                  </tr>
+                  <tr>
                     <th class="w-24 text-right pr-4">Status: </th>
                     <td class="font-bold" >
                     @if($belonging->status == 1)
@@ -67,7 +80,6 @@ belongings
                   </tr>
                 </table>
               </div>
-              
             </div>
           </div>
         </main>

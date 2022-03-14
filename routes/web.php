@@ -32,6 +32,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/add', [BelongingController::class, 'add'])->name('add-to-vault');
     Route::post('/add', [BelongingController::class, 'store']);
 
+    Route::get('/edit/{id}',[BelongingController::class, "edit"])->name('edit');
+    Route::post('/edit/{id}',[BelongingController::class, "update"]);
+
     Route::get('/belongings', [BelongingController::class, 'view'])->name('view');
     Route::get('/belonging/{id}', [BelongingController::class, 'belonging'])->name('belonging');
     Route::get('/status/{id}', [BelongingController::class, 'status'])->name('status');
