@@ -421,7 +421,7 @@
                             }
                         }
                     };
-                    xhttp.open("GET", "/api/search?q="+self.value, true);
+                    xhttp.open("GET", "./api/search?q="+self.value, true);
                     xhttp.send();
                     });
                     document.body.addEventListener('click',function(e){
@@ -479,7 +479,6 @@
                 >
                   <img
                     class="object-cover w-8 h-8 rounded-full border"
-                    src="{{ asset("avatars/".Auth::user()->with('avatar')->first()->avatar->image) }}"
                     aria-hidden="true"
                   />
                 </button>

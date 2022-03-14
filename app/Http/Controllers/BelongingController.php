@@ -27,9 +27,13 @@ class BelongingController extends Controller
         return view('add-to-vault',['slots'=>$slots,'types'=>$types,'sizes'=>$sizes,'visitor'=>$visitor, 'slot_counts'=> $slot_counts]);
     }
 
+    public function delete(){
+
+    }
+
     public function view()
     {
-        $belongings = Belonging::with('size')->with('type')->paginate(15);
+        $belongings = Belonging::with('size')->with('type')->with('slot')->orderBy('id','DESC')->get();
         return view('belongings', ['belongings' => $belongings]);
     }
 
@@ -68,19 +72,30 @@ class BelongingController extends Controller
         $slots_count = count(Belonging::where('slot_id',$slot->id)->get());
         $code = $slots_count + 1;
 
+
         $belonging->code = $slot->name ."-" . $code;
         
         $belonging->save();
+        $belonging_ =  Belonging::where("id",$belonging->id)->with('type')->with('visitor')->with('size')->with('slot')->first();
+        $client = new PostmarkClient(env("POSTMARK_SECRET"));
+        $sendResult = $client->sendEmailWithTemplate(
+                        "info@gamerslegacy.net",
+                        request('email'),
+                        25435508,
+                        [
+                            "name" => $belonging_->name,
+                            "code" => $belonging_->code,
+                            "visitor" => $belonging_->visitor->name,
+                            "phone" => $belonging_->phone,
+                            "color" => $belonging_->color_name,
+                            "slot" => $belonging_->slot->name,
+                            "type" => $belonging_->type->name,
+                            "weight" => $belonging_->size->name,
 
-        // $client = new PostmarkClient(env("POSTMARK_SECRET"));
-        // $sendResult = $client->sendEmailWithTemplate(
-        //                 "info@gamerslegacy.net",
-        //                 request('email'),
-        //                 25356257,
-        //                 [
-        //                     "name" => request('name'),
-        //                 ]
-        //             );
+                            
+                            
+                        ]
+                    );
         
         return redirect()->back()->with('success','Belonging has been added to the Vault! | Belonging Code: '.$belonging->code);
     }
