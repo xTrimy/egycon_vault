@@ -30,6 +30,8 @@ Route::get('/tables', function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [DashboardController::class,'index'])->name('home');
     Route::get('/add', [BelongingController::class, 'add'])->name('add-to-vault');
+
+
     Route::post('/add', [BelongingController::class, 'store']);
 
     Route::get('/edit/{id}',[BelongingController::class, "edit"])->name('edit');
@@ -44,6 +46,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/add-slot', [SlotController::class, 'add'])->name('add-slot');
     Route::post('/add-slot', [SlotController::class, 'store']);
+
+
+    Route::get('/edit/{id}',[SlotController::class,"edit_slot"])->name('edit');
+    Route::post('/edit/{id}',[SlotController::class,"update_slot"])->name('update');
 
 
 

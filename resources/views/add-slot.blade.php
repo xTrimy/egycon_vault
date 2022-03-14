@@ -12,9 +12,8 @@ Add Slot
             <h2
               class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
             >
-              Add Slot
+            {{{ isset($slots) ? 'Edit Slot' : 'Add Slot' }}}
             </h2>
-            {{$slot}}
             @if(Session::has('success'))
             <div
               class="flex items-center justify-between px-4 p-2 mb-8 text-sm font-semibold text-green-600 bg-green-100 rounded-lg focus:outline-none focus:shadow-outline-purple"
