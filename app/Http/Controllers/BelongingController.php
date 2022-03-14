@@ -72,25 +72,29 @@ class BelongingController extends Controller
         $slots_count = count(Belonging::where('slot_id',$slot->id)->get());
         $code = $slots_count + 1;
 
-
         $belonging->code = $slot->name ."-" . $code;
         
+        $visitor_type = VisitorType::where('id',$request->visitor)->first();
+
+        $belonging_type = BelongingType::where('id',$request->type)->first();
+
+        $belonging_size = BelongingSize::where('id',$request->size)->first();
+
         $belonging->save();
-        $belonging_ =  Belonging::where("id",$belonging->id)->with('type')->with('visitor')->with('size')->with('slot')->first();
         $client = new PostmarkClient(env("POSTMARK_SECRET"));
         $sendResult = $client->sendEmailWithTemplate(
                         "info@gamerslegacy.net",
                         request('email'),
                         25435508,
                         [
-                            "name" => $belonging_->name,
-                            "code" => $belonging_->code,
-                            "visitor" => $belonging_->visitor->name,
-                            "phone" => $belonging_->phone,
-                            "color" => $belonging_->color_name,
-                            "slot" => $belonging_->slot->name,
-                            "type" => $belonging_->type->name,
-                            "weight" => $belonging_->size->name,
+                            "name" => $belonging->name,
+                            "code" => $belonging->code,
+                            "visitor" => $visitor_type->name,
+                            "phone" => $belonging->phone,
+                            "color" => $belonging->color_name,
+                            "slot" => $slot->name,
+                            "type" => $belonging_type->name,
+                            "weight" => $belonging_size->name,
 
                             
                             
@@ -109,6 +113,58 @@ class BelongingController extends Controller
         return view('belonging', ['belonging' => $belonging]);
     }
 
+    public function edit($id){
+        $types = BelongingType::all();
+        $sizes = BelongingSize::all();
+        $visitor = VisitorType::all();
+        $slots = Slot::all();
+        $slot_counts = [];
+        foreach($slots as $slot){
+            $count = count(Belonging::where('slot_id',$slot->id)->get());
+            $slot_counts[$slot->name] = $count;
+        }
+    
+        $belonging = Belonging::where('id',$id)
+        ->with('slot')
+        ->with('size')
+        ->with('type')
+        ->first();
+        return view('add-to-vault',['slots'=>$slots,'types'=>$types,'sizes'=>$sizes,'visitor'=>$visitor, 'slot_counts'=> $slot_counts, 'belonging' => $belonging]);
+    }
+
+    public function update(Request $request,$belonging){
+        
+        $request->validate([
+            'name'=> "required|max:64|min:6",
+            'phone'=>"required|max:15|min:11",
+            'email'=>"email|required",
+            "type"=>"required|exists:belonging_types,id",
+            "size"=>"required|exists:belonging_sizes,id",
+            'color'=>"required",
+            "color_name"=>"required",
+            "notes"=>"nullable",
+            "visitor"=>"required|exists:visitor_types,id",
+        ]);
+        $belonging = Belonging::find($belonging);
+        $belonging->name = $request->name;
+        $belonging->email = $request->email;
+        $belonging->phone = $request->phone;
+        $belonging->color = $request->color;
+        $belonging->status = "1";
+        $belonging->belonging_type_id = $request->type;
+        $belonging->belonging_size_id = $request->size;
+        $belonging->visitor_type_id = $request->visitor;
+        $belonging->color_name = $request->color_name;
+
+
+        if($request->has('notes'))
+            $belonging->notes = $request->notes;
+  
+        $belonging->save();
+
+        return redirect()->back()->with('success','Belonging has been changed!');
+    }
+
     public function status($id){
         print("helo");
 
@@ -122,7 +178,7 @@ class BelongingController extends Controller
         }
 
         $data->save();
-        return redirect()->back()->with("Belonging Status changed!");
+        return redirect()->back()->with('success',"Belonging Status changed!");
     }
 
 }

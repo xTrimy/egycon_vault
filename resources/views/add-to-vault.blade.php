@@ -12,7 +12,7 @@ Add To Vault
             <h2
               class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
             >
-              Add To Vault
+            {{{ isset($belonging) ? 'Edit Belonging' : 'Add To Vault' }}}
             </h2>
             
             @if(Session::has('success'))
@@ -39,7 +39,7 @@ Add To Vault
                 Person Name
                 </span>
                 <input
-                value="{{ old('name') }}"
+                value="{{ old('name') ?? @$belonging->name}}"
                 type="text"
                 name="name"
                     required
@@ -53,7 +53,7 @@ Add To Vault
                 Email Address
                 </span>
                 <input
-                value="{{ old('email') }}"
+                value="{{ old('email') ?? @$belonging->email}}"
                     type="email"
                     name="email"
                     required
@@ -67,7 +67,7 @@ Add To Vault
                 Phone Number
                 </span>
                 <input
-                value="{{ old('phone') }}"
+                value="{{ old('phone') ?? @$belonging->phone}}"
                     type="tel"
                     name="phone"
                     required
@@ -86,13 +86,15 @@ Add To Vault
                     class="inline-flex items-center text-gray-600 dark:text-gray-400"
                   >
                     <input
-                    @if(old('visitor') == $visitor->id)
-                    checked
-                    @endif
+                   
                       type="radio"
                       class="text-purple-600 border-2 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                       name="visitor"
                       value="{{ $visitor->id }}"
+
+                      @if(@$belonging->visitor_type_id == $visitor->id)
+                        checked
+                      @endif
                     />
                     <span class="ml-2">{{ $visitor->name }}</span>
                   </label>
@@ -109,9 +111,9 @@ Add To Vault
                     class="inline-flex items-center text-gray-600 dark:text-gray-400"
                   >
                     <input
-                    @if(old('type') == $type->id)
-                    checked
-                    @endif
+                      @if(@$belonging->belonging_type_id == $type->id)
+                        checked
+                      @endif
                       type="radio"
                       class="text-purple-600 border-2 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                       name="type"
@@ -133,9 +135,9 @@ Add To Vault
                     class="inline-flex items-center text-gray-600 dark:text-gray-400"
                   >
                     <input
-                    @if(old('size') == $size->id)
-                    checked
-                    @endif
+                    @if(@$belonging->belonging_size_id == $size->id)
+                        checked
+                      @endif
                       type="radio"
                       class="text-purple-600 border-2 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                       name="size"
@@ -152,10 +154,10 @@ Add To Vault
                 Belonging Color
                 </span>
                 <input 
-                value="{{ old('color_name') }}"
+                value="{{ old('color_name') ?? @$belonging->color_name}}"
                 type="hidden" required name="color_name" id="color_name">
                 <input
-                value="{{ old('color') }}"
+                value="{{ old('color') ?? @$belonging->color}}"
                   id="color"
                   type="color"
                   name="color"
@@ -163,8 +165,8 @@ Add To Vault
                   placeholder="#ff0000"
                 />
                 <p id="color_name_p"
-                style="color:{{ old('color') }}">
-                {{ old('color_name') }}
+                style="color:{{ old('color') ?? @$belonging->color}}">
+                {{ old('color_name') ?? @$belonging->color_name}}
                 </p>
               </label>
               <script>
@@ -199,8 +201,9 @@ Add To Vault
                   class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                   rows="3"
                   placeholder="(Optional)"
-                >{{ old('notes') }}</textarea>
+                >{{ old('notes') ?? @$belonging->notes}}</textarea>
               </label>
+              @if(!isset($belonging))
               <div class="mt-4 text-sm">
                 <span class="text-gray-700 dark:text-gray-400">
                 <i class="las la-lock text-xl"></i>
@@ -231,9 +234,10 @@ Add To Vault
                   </label>
                     @endforeach
                 </div>
+                @endif
               </div>
               <button type="submit" class="table items-center mt-4 justify-between px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-              Add To Vault
+              {{{ isset($belonging) ? 'Edit Belonging' : 'Add To Vault' }}}
               <span class="ml-2" aria-hidden="true">
                   <i class='las la-arrow-right'></i>
               </span>

@@ -14,7 +14,7 @@ Add Slot
             >
               Add Slot
             </h2>
-            
+            {{$slot}}
             @if(Session::has('success'))
             <div
               class="flex items-center justify-between px-4 p-2 mb-8 text-sm font-semibold text-green-600 bg-green-100 rounded-lg focus:outline-none focus:shadow-outline-purple"
