@@ -48,8 +48,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/add-slot', [SlotController::class, 'store']);
 
 
-    Route::get('/edit/{id}',[SlotController::class,"edit_slot"])->name('edit');
-    Route::post('/edit/{id}',[SlotController::class,"update_slot"])->name('update');
+    Route::get('/edit-slot/{id}',[SlotController::class,"edit_slot"])->name('edit_slot');
+    Route::post('/edit-slot/{id}',[SlotController::class,"update_slot"])->name('update');
 
 
 

@@ -3,7 +3,7 @@
 add-slot
 @endsection
 @section('title')
-Add Slot
+{{{ isset($slots) ? 'Edit Slot' : 'Add Slot' }}}
 @endsection
 @section('content')
 
@@ -38,7 +38,7 @@ Add Slot
                 Name (Letter)
                 </span>
                 <input
-                value="{{ old('name') }}"
+                value="{{ old('name') ?? @$slots->name}}"
                 type="text"
                 name="name"
                     required
@@ -52,7 +52,7 @@ Add Slot
                 Maximum Belongings
                 </span>
                 <input
-                value="{{ old('max') }}"
+                value="{{ old('max') ?? @$slots->max}}"
                     type="number"
                     name="max"
                     required
@@ -61,7 +61,7 @@ Add Slot
                 />
               </label>
               <button type="submit" class="table items-center mt-4 justify-between px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-              Add Slot
+              {{{ isset($slots) ? 'Edit Slot' : 'Add Slot' }}}
               <span class="ml-2" aria-hidden="true">
                   <i class='las la-arrow-right'></i>
               </span>

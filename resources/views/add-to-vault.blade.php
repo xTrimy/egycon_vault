@@ -3,7 +3,7 @@
 add
 @endsection
 @section('title')
-Add To Vault
+{{{ isset($belonging) ? 'Edit Belonging' : 'Add To Vault' }}}
 @endsection
 @section('content')
 
