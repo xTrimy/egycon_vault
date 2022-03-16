@@ -166,10 +166,7 @@ class BelongingController extends Controller
     }
 
     public function status($id){
-        print("helo");
-
         $data = Belonging::find($id);
-        print($data);
         if($data->status == 1){
             $data->status = 0;
         }
