@@ -1,3 +1,13 @@
+@if(Session::has('success'))
+            <div
+              class="flex items-center justify-between px-4 p-2 mb-8 text-sm font-semibold text-green-600 bg-green-100 rounded-lg focus:outline-none focus:shadow-outline-purple"
+            >
+              <div class="flex items-center">
+                <i class="fas fa-check mr-2"></i>
+                <span>{{ Session::get('success') }}</span>
+              </div>
+            </div>
+            @endif
 <table class="w-full whitespace-no-wrap">
                   <thead>
                     <tr
@@ -99,7 +109,11 @@
                           </button>
                           <button
                             class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                            onclick="display_popup(this)"
+                            data-title="Are you sure you want to Delete this belonging?"
+                            data-content="By Pressing Continue. This belonging will be deleted and cannot be undone."
                             aria-label="Delete"
+                            data-action="{{ route('delete',['id' => $belonging->id]) }}"
                           >
                             <svg
                               class="w-5 h-5"

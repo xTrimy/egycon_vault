@@ -22,6 +22,7 @@
     <script src="{{ asset('js/init-alpine.js') }}"></script>
   </head>
   <body>
+  <x-delete-popup/>
     <div
       class="flex h-screen bg-gray-50 dark:bg-gray-900"
       :class="{ 'overflow-hidden': isSideMenuOpen}"

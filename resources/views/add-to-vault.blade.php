@@ -165,7 +165,7 @@ add
                   placeholder="#ff0000"
                 />
                 <p id="color_name_p"
-                style="color:{{ old('color') ?? @$belonging->color}}">
+                style="color: {{ old('color') ?? @$belonging->color}}">
                 {{ old('color_name') ?? @$belonging->color_name}}
                 </p>
               </label>

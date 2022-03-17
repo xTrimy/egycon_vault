@@ -51,4 +51,23 @@ class SlotController extends Controller
         $slot->save();
         return redirect()->back()->with('success',"Slot has been Changed!");
     }
+
+    public function delete_slot($id){
+        $slot = Slot::findOrFail($id);
+
+        $slots = Slot::paginate(15);
+        $slot_counts = [];
+        foreach ($slots as $slot) {
+            $count = count(Belonging::where('slot_id', $id)->get());
+            $slot_counts[$slot->name] = $count;
+        }
+        if($slot_counts[$slot->name] > 0){
+            return redirect()->back()->with(["error" => "Slot cannot be deleted because it's occupied."]);
+        }
+        else{
+            $slot->delete();
+            return redirect()->back()->with(["success" => "Slot has been deleted successfully!"]);
+        }
+
+    }
 }
