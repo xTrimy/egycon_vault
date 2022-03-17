@@ -3,7 +3,7 @@
 add
 @endsection
 @section('title')
-Add To Vault
+{{{ isset($belonging) ? 'Edit Belonging' : 'Add To Vault' }}}
 @endsection
 @section('content')
 
@@ -165,7 +165,7 @@ Add To Vault
                   placeholder="#ff0000"
                 />
                 <p id="color_name_p"
-                style="color:{{ old('color') ?? @$belonging->color}}">
+                style="color: {{ old('color') ?? @$belonging->color}}">
                 {{ old('color_name') ?? @$belonging->color_name}}
                 </p>
               </label>
