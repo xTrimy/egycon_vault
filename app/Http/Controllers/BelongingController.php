@@ -73,7 +73,7 @@ class BelongingController extends Controller
         $code = $slots_count + 1;
 
         $belonging->code = $slot->name ."-" . $code;
-        
+
         $visitor_type = VisitorType::where('id',$request->visitor)->first();
 
         $belonging_type = BelongingType::where('id',$request->type)->first();
@@ -96,11 +96,11 @@ class BelongingController extends Controller
                             "type" => $belonging_type->name,
                             "weight" => $belonging_size->name,
 
-                            
-                            
+
+
                         ]
                     );
-        
+
         return redirect()->back()->with('success','Belonging has been added to the Vault! | Belonging Code: '.$belonging->code);
     }
     public function belonging($id)
@@ -123,7 +123,7 @@ class BelongingController extends Controller
             $count = count(Belonging::where('slot_id',$slot->id)->get());
             $slot_counts[$slot->name] = $count;
         }
-    
+
         $belonging = Belonging::where('id',$id)
         ->with('slot')
         ->with('size')
@@ -133,7 +133,7 @@ class BelongingController extends Controller
     }
 
     public function update(Request $request,$belonging){
-        
+
         $request->validate([
             'name'=> "required|max:64|min:6",
             'phone'=>"required|max:15|min:11",
@@ -159,15 +159,13 @@ class BelongingController extends Controller
 
         if($request->has('notes'))
             $belonging->notes = $request->notes;
-  
+
         $belonging->save();
 
         return redirect()->back()->with('success','Belonging has been changed!');
     }
 
     public function status($id){
-        print("helo");
-
         $data = Belonging::find($id);
         print($data);
         if($data->status == 1){
