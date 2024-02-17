@@ -13,7 +13,26 @@ Slots
             >
               Slots
             </h2>
-            
+            @if(Session::has('error'))
+            <div
+              class="flex items-center justify-between px-4 p-2 mb-8 text-sm font-semibold text-red-600 bg-red-100 rounded-lg focus:outline-none focus:shadow-outline-purple"
+            >
+              <div class="flex items-center">
+                <i class="fas fa-check mr-2"></i>
+                <span>{{ Session::get('error') }}</span>
+              </div>
+            </div>
+            @endif
+            @if(Session::has('success'))
+            <div
+              class="flex items-center justify-between px-4 p-2 mb-8 text-sm font-semibold text-green-600 bg-green-100 rounded-lg focus:outline-none focus:shadow-outline-purple"
+            >
+              <div class="flex items-center">
+                <i class="fas fa-check mr-2"></i>
+                <span>{{ Session::get('success') }}</span>
+              </div>
+            </div>
+            @endif
             <div class="w-full overflow-hidden rounded-lg shadow-xs">
                 <div class="w-full overflow-x-auto">
                     <table class="w-full whitespace-no-wrap">
@@ -50,6 +69,7 @@ Slots
                           <button
                             class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                             aria-label="Edit"
+                            onclick="window.location='{{ route('edit_slot',['id' => $slot->id]) }}'"
                           >
                             <svg
                               class="w-5 h-5"
@@ -64,7 +84,11 @@ Slots
                           </button>
                           <button
                             class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                            onclick="display_popup(this)"
+                            data-title="Are you sure you want to Delete this Slot?"
+                            data-content="By Pressing Continue. This Slot will be deleted and cannot be undone."
                             aria-label="Delete"
+                            data-action="{{ route('delete_slot',['id' => $slot->id]) }}"
                           >
                             <svg
                               class="w-5 h-5"

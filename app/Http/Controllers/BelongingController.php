@@ -27,9 +27,6 @@ class BelongingController extends Controller
         return view('add-to-vault',['slots'=>$slots,'types'=>$types,'sizes'=>$sizes,'visitor'=>$visitor, 'slot_counts'=> $slot_counts]);
     }
 
-    public function delete(){
-
-    }
 
     public function view()
     {
@@ -167,7 +164,6 @@ class BelongingController extends Controller
 
     public function status($id){
         $data = Belonging::find($id);
-        print($data);
         if($data->status == 1){
             $data->status = 0;
         }
@@ -177,6 +173,13 @@ class BelongingController extends Controller
 
         $data->save();
         return redirect()->back()->with('success',"Belonging Status changed!");
+    }
+
+    public function delete($id){
+        $belonging = Belonging::findOrFail($id);
+        $belonging->delete();
+
+        return redirect()->back()->with(["success" => "Belonging has been deleted successfully!"]);
     }
 
 }

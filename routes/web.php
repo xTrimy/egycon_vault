@@ -29,21 +29,36 @@ Route::get('/tables', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [DashboardController::class,'index'])->name('home');
+
+    #Add Belonging
     Route::get('/add', [BelongingController::class, 'add'])->name('add-to-vault');
     Route::post('/add', [BelongingController::class, 'store']);
 
+    #Edit Belonging
     Route::get('/edit/{id}',[BelongingController::class, "edit"])->name('edit');
     Route::post('/edit/{id}',[BelongingController::class, "update"]);
 
+    #View Belonging
     Route::get('/belongings', [BelongingController::class, 'view'])->name('view');
     Route::get('/belonging/{id}', [BelongingController::class, 'belonging'])->name('belonging');
+
+    #Change Belonging Status
     Route::get('/status/{id}', [BelongingController::class, 'status'])->name('status');
+
+    #Delete Belonging
+    Route::get('/delete/{id}', [BelongingController::class, 'delete'])->name('delete');
 
 
     Route::get('/slots', [SlotController::class, 'index'])->name('slots');
 
     Route::get('/add-slot', [SlotController::class, 'add'])->name('add-slot');
     Route::post('/add-slot', [SlotController::class, 'store']);
+
+
+    Route::get('/edit-slot/{id}',[SlotController::class,"edit_slot"])->name('edit_slot');
+    Route::post('/edit-slot/{id}',[SlotController::class,"update_slot"])->name('update');
+
+    Route::get('/delete-slot/{id}', [SlotController::class, 'delete_slot'])->name('delete_slot');
 
 
 

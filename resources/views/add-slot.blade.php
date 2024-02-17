@@ -3,7 +3,7 @@
 add-slot
 @endsection
 @section('title')
-Add Slot
+{{{ isset($slots) ? 'Edit Slot' : 'Add Slot' }}}
 @endsection
 @section('content')
 
@@ -12,9 +12,18 @@ Add Slot
             <h2
               class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
             >
-              Add Slot
+            {{{ isset($slots) ? 'Edit Slot' : 'Add Slot' }}}
             </h2>
-            {{$slot}}
+            @if(Session::has('error'))
+            <div
+              class="flex items-center justify-between px-4 p-2 mb-8 text-sm font-semibold text-red-600 bg-red-100 rounded-lg focus:outline-none focus:shadow-outline-purple"
+            >
+              <div class="flex items-center">
+                <i class="fas fa-check mr-2"></i>
+                <span>{{ Session::get('error') }}</span>
+              </div>
+            </div>
+            @endif
             @if(Session::has('success'))
             <div
               class="flex items-center justify-between px-4 p-2 mb-8 text-sm font-semibold text-green-600 bg-green-100 rounded-lg focus:outline-none focus:shadow-outline-purple"
@@ -39,7 +48,7 @@ Add Slot
                 Name (Letter)
                 </span>
                 <input
-                value="{{ old('name') }}"
+                value="{{ old('name') ?? @$slots->name}}"
                 type="text"
                 name="name"
                     required
@@ -53,7 +62,7 @@ Add Slot
                 Maximum Belongings
                 </span>
                 <input
-                value="{{ old('max') }}"
+                value="{{ old('max') ?? @$slots->max}}"
                     type="number"
                     name="max"
                     required
@@ -62,7 +71,7 @@ Add Slot
                 />
               </label>
               <button type="submit" class="table items-center mt-4 justify-between px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-              Add Slot
+              {{{ isset($slots) ? 'Edit Slot' : 'Add Slot' }}}
               <span class="ml-2" aria-hidden="true">
                   <i class='las la-arrow-right'></i>
               </span>
