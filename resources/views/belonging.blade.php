@@ -47,11 +47,11 @@ belongings
                     <td class="font-bold">{{$belonging->code}}</td>
                   </tr>
                     <tr>
-                    <th class="w-24 text-right pr-4">Code: </th>
+                    <th class="w-24 text-right pr-4">Size: </th>
                     <td class="font-bold">{{$belonging->size->name}}</td>
                   </tr>
                     <tr>
-                    <th class="w-24 text-right pr-4">Code: </th>
+                    <th class="w-24 text-right pr-4">Type: </th>
                     <td class="font-bold">{{$belonging->type->name}}</td>
                   </tr>
                   <tr>
