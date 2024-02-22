@@ -131,8 +131,26 @@
                 <i class="las la-lock text-xl relative">
                   <i class="las la-plus text-sm absolute bottom-0 transform translate-x-1/2 right-full"></i>
                 </i>
-                
+
                 <span class="ml-4">Add slot</span>
+              </a>
+            </li>
+            <li class="relative px-6 py-3">
+              @if($page == 'add-user')
+              <span
+                class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                aria-hidden="true"
+              ></span>
+              @endif
+              <a
+                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                href="{{ route('add-user') }}"
+              >
+                <i class="las la-lock text-xl relative">
+                  <i class="las la-plus text-sm absolute bottom-0 transform translate-x-1/2 right-full"></i>
+                </i>
+
+                <span class="ml-4">Add User</span>
               </a>
             </li>
           </ul>
@@ -148,7 +166,7 @@
         </div>
       </aside>
 
-      
+
       <!-- Mobile sidebar -->
       <!-- Backdrop -->
       <div
@@ -270,12 +288,12 @@
                 <i class="las la-lock text-xl relative">
                   <i class="las la-plus text-sm absolute bottom-0 transform translate-x-1/2 right-full"></i>
                 </i>
-                
+
                 <span class="ml-4">Add slot</span>
               </a>
             </li>
           </ul>
-          
+
         </div>
       </aside>
       <div class="flex flex-col flex-1">
@@ -329,7 +347,7 @@
                   aria-label="Search"
                 />
                 <div id="search_dropdown" class="absolute top-full w-full py-2 bg-white dark:bg-gray-800 shadow-sm px-4">
-                    
+
                     <div id="code_search_container"></div>
                     <div id="person_search_container"></div>
                     <div id="email_search_container"></div>
@@ -337,10 +355,10 @@
                     <div id="slot_search_container"></div>
                     <div class="hidden" id="search_element_cloner">
                         <a class="element block py-2 px-4 text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer">
-                            
+
                         </a>
                     </div>
-                    
+
                 </div>
                 <script>
                     var search_input = document.getElementById('search_input');
@@ -361,7 +379,7 @@
                       return;
                     }
                     search_dropdown.classList.remove('hidden');
-                    
+
                     var self = this;
                     var xhttp = new XMLHttpRequest();
                     xhttp.onreadystatechange = function() {
@@ -402,7 +420,7 @@
                                 for(let i = 0; i<phones.length; i++){
                                     var element = search_cloner.querySelector('a').cloneNode(true);
                                     element.setAttribute("href","/belonging/"+phones[i].id);
-                                    element.innerHTML =  phones[i].name; 
+                                    element.innerHTML =  phones[i].name;
                                     element.innerHTML += " | " + phones[i].phone.replace(self.value,`<span class='font-bold text-black dark:text-white'>${self.value}</span>`);
                                     element.innerHTML += " | " + phones[i].type.name;
                                     element.innerHTML += " | " + phones[i].code;
@@ -413,7 +431,7 @@
                                 for(let i = 0; i<codes.length; i++){
                                     var element = search_cloner.querySelector('a').cloneNode(true);
                                     element.setAttribute("href","/belonging/"+codes[i].id);
-                                    element.innerHTML =  codes[i].name; 
+                                    element.innerHTML =  codes[i].name;
                                     element.innerHTML += " | " + codes[i].code.replace(self.value,`<span class='font-bold text-black dark:text-white'>${self.value}</span>`);
                                     element.innerHTML += " | " + codes[i].type.name;
                                     element.innerHTML += " | " + codes[i].size.name;
