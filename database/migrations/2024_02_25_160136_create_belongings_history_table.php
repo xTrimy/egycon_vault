@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddAvatarColumnToUsersTable extends Migration
+class CreateBelongingsHistoryTable extends Migration
 {
   /**
    * Run the migrations.
@@ -13,8 +13,9 @@ class AddAvatarColumnToUsersTable extends Migration
    */
   public function up()
   {
-    Schema::table('users', function (Blueprint $table) {
-      $table->foreignId('avatar_id')->nullable()->constrained()->onDelete('set null')->onUpdate('set null');
+    Schema::create('belongings_history', function (Blueprint $table) {
+      $table->id();
+      $table->timestamps();
     });
   }
 
@@ -25,8 +26,6 @@ class AddAvatarColumnToUsersTable extends Migration
    */
   public function down()
   {
-    Schema::table('users', function (Blueprint $table) {
-      $table->dropColumn('avatar_id');
-    });
+    Schema::dropIfExists('belongings_history');
   }
 }

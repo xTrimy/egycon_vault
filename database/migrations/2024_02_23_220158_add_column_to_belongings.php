@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddMoreColumnsToBelongingsTable extends Migration
+class AddColumnToBelongings extends Migration
 {
   /**
    * Run the migrations.
@@ -14,8 +14,7 @@ class AddMoreColumnsToBelongingsTable extends Migration
   public function up()
   {
     Schema::table('belongings', function (Blueprint $table) {
-      $table->string('color_name')->nullable();
-      $table->text('notes')->nullable();
+      $table->foreignId('added_by_id')->nullable()->constrained('users')->onDelete('set null')->onUpdate('set null');
     });
   }
 
@@ -27,8 +26,8 @@ class AddMoreColumnsToBelongingsTable extends Migration
   public function down()
   {
     Schema::table('belongings', function (Blueprint $table) {
-      $table->dropColumn('color_name');
-      $table->dropColumn('notes');
+      $table->dropForeign(['added_by_id']); // Drop foreign key constraint
+      $table->dropColumn('added_by_id'); // Drop user_id column
     });
   }
 }

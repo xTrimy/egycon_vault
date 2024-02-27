@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class BelongingSize extends Model
 {
-    use HasFactory;
+  use HasFactory;
 }

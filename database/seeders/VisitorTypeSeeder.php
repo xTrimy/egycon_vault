@@ -8,26 +8,26 @@ use Spatie\Permission\Models\VisitorType;
 
 class VisitorTypeSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
-    {
+  /**
+   * Run the database seeds.
+   *
+   * @return void
+   */
+  public function run()
+  {
 
-        $users =  [
-            [
-              'name' => 'Cosplayer',
-            ],
-            [
-              'name' => 'Elite',
-            ],
-            [
-              'name' => 'Visitor',
-            ]
-          ];
+    $users =  [
+      [
+        'name' => 'Cosplayer',
+      ],
+      [
+        'name' => 'Elite',
+      ],
+      [
+        'name' => 'Visitor',
+      ]
+    ];
 
-        DB::table('visitor_types')->insert($users);
-    }
+    DB::table('visitor_types')->insert($users);
+  }
 }
