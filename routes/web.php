@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\BelongingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SlotController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -59,6 +60,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/edit-slot/{id}',[SlotController::class,"update_slot"])->name('update');
 
     Route::get('/delete-slot/{id}', [SlotController::class, 'delete_slot'])->name('delete_slot');
+
+    Route::get('/add-user', [UserController::class, 'add'])->name('add-user');
+    Route::post('/add-user', [UserController::class, 'store']);
 
 
 
