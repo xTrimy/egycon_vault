@@ -21,6 +21,7 @@ class Belonging extends Model
         'slot_id',
         'code',
         'visitor_type_id',
+        'added_by_id',
     ];
 
     public function size(){

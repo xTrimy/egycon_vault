@@ -48,6 +48,7 @@ class BelongingController extends Controller
             "notes"=>"nullable",
             "slot_id" => "required|exists:slots,id",
             "visitor"=>"required|exists:visitor_types,id",
+
         ]);
         $belonging = new Belonging();
         $belonging->name = $request->name;
@@ -59,8 +60,6 @@ class BelongingController extends Controller
         $belonging->belonging_size_id = $request->size;
         $belonging->visitor_type_id = $request->visitor;
         $belonging->color_name = $request->color_name;
-
-
         if($request->has('notes'))
             $belonging->notes = $request->notes;
         $belonging->slot_id = $request->slot_id;
@@ -76,6 +75,8 @@ class BelongingController extends Controller
         $belonging_type = BelongingType::where('id',$request->type)->first();
 
         $belonging_size = BelongingSize::where('id',$request->size)->first();
+
+        $belonging->added_by_id = auth()->id();
 
         $belonging->save();
         $client = new PostmarkClient(env("POSTMARK_SECRET"));
