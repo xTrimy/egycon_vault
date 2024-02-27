@@ -14,7 +14,7 @@ add
             >
             {{{ isset($belonging) ? 'Edit Belonging' : 'Add To Vault' }}}
             </h2>
-            
+
             @if(Session::has('success'))
             <div
               class="flex items-center justify-between px-4 p-2 mb-8 text-sm font-semibold text-green-600 bg-green-100 rounded-lg focus:outline-none focus:shadow-outline-purple"
@@ -86,15 +86,12 @@ add
                     class="inline-flex items-center text-gray-600 dark:text-gray-400"
                   >
                     <input
-                   
+
                       type="radio"
                       class="text-purple-600 border-2 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                       name="visitor"
                       value="{{ $visitor->id }}"
-
-                      @if(@$belonging->visitor_type_id == $visitor->id)
-                        checked
-                      @endif
+                      {{ old('visitor', @$belonging->visitor_type_id) == $visitor->id ? 'checked' : '' }}
                     />
                     <span class="ml-2">{{ $visitor->name }}</span>
                   </label>
@@ -118,6 +115,9 @@ add
                       class="text-purple-600 border-2 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                       name="type"
                       value="{{ $type->id }}"
+                      @if(old('type', @$belonging->belonging_type_id) == $type->id) checked @endif
+
+
                     />
                     <span class="ml-2">{{ $type->name }}</span>
                   </label>
@@ -142,6 +142,7 @@ add
                       class="text-purple-600 border-2 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                       name="size"
                       value="{{ $size->id }}"
+                      @if(old('size', @$belonging->belonging_size_id) == $size->id) checked @endif
                     />
                     <span class="ml-2">{{ $size->name }}</span>
                   </label>
@@ -153,7 +154,7 @@ add
                 <i class="las la-brush text-xl"></i>
                 Belonging Color
                 </span>
-                <input 
+                <input
                 value="{{ old('color_name') ?? @$belonging->color_name}}"
                 type="hidden" required name="color_name" id="color_name">
                 <input

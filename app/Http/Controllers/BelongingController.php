@@ -48,6 +48,7 @@ class BelongingController extends Controller
             "notes"=>"nullable",
             "slot_id" => "required|exists:slots,id",
             "visitor"=>"required|exists:visitor_types,id",
+
         ]);
         $belonging = new Belonging();
         $belonging->name = $request->name;
@@ -59,8 +60,6 @@ class BelongingController extends Controller
         $belonging->belonging_size_id = $request->size;
         $belonging->visitor_type_id = $request->visitor;
         $belonging->color_name = $request->color_name;
-
-
         if($request->has('notes'))
             $belonging->notes = $request->notes;
         $belonging->slot_id = $request->slot_id;
@@ -70,12 +69,14 @@ class BelongingController extends Controller
         $code = $slots_count + 1;
 
         $belonging->code = $slot->name ."-" . $code;
-        
+
         $visitor_type = VisitorType::where('id',$request->visitor)->first();
 
         $belonging_type = BelongingType::where('id',$request->type)->first();
 
         $belonging_size = BelongingSize::where('id',$request->size)->first();
+
+        $belonging->added_by_id = auth()->id();
 
         $belonging->save();
         $client = new PostmarkClient(env("POSTMARK_SECRET"));
@@ -93,11 +94,11 @@ class BelongingController extends Controller
                             "type" => $belonging_type->name,
                             "weight" => $belonging_size->name,
 
-                            
-                            
+
+
                         ]
                     );
-        
+
         return redirect()->back()->with('success','Belonging has been added to the Vault! | Belonging Code: '.$belonging->code);
     }
     public function belonging($id)
@@ -120,7 +121,7 @@ class BelongingController extends Controller
             $count = count(Belonging::where('slot_id',$slot->id)->get());
             $slot_counts[$slot->name] = $count;
         }
-    
+
         $belonging = Belonging::where('id',$id)
         ->with('slot')
         ->with('size')
@@ -130,7 +131,7 @@ class BelongingController extends Controller
     }
 
     public function update(Request $request,$belonging){
-        
+
         $request->validate([
             'name'=> "required|max:64|min:6",
             'phone'=>"required|max:15|min:11",
@@ -156,7 +157,7 @@ class BelongingController extends Controller
 
         if($request->has('notes'))
             $belonging->notes = $request->notes;
-  
+
         $belonging->save();
 
         return redirect()->back()->with('success','Belonging has been changed!');

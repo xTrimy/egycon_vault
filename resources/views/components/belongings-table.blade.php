@@ -20,6 +20,8 @@
                         <th class="px-4 py-3">Slot</th>
 
                       <th class="px-4 py-3">Phone</th>
+                      <th class="px-4 py-3">Added by</th>
+
                       <th class="px-4 py-3">Status</th>
                       <th class="px-4 py-3">Date</th>
                       <th class="px-4 py-3">Actions</th>
@@ -70,6 +72,9 @@
                       </td>
                       <td class="px-4 py-3 " >
                         {{ $belonging->phone }}
+                      </td>
+                      <td class="px-4 py-3 " >
+                        {{ \App\Models\User::find($belonging->added_by_id)->name}}
                       </td>
                       <td class="px-4 py-3 text-xs">
                         @if($belonging->status == 1)
@@ -139,7 +144,7 @@
                         </div>
                       </td>
                     </tr>
-                    
+
                   @endforeach
                   </tbody>
                 </table>
