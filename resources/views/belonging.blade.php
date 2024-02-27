@@ -11,7 +11,7 @@ belongings
             <h2
               class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
             >
-              Belonging 
+              Belonging
             </h2>
             @if(Session::has('success'))
             <div
@@ -46,6 +46,14 @@ belongings
                     <th class="w-24 text-right pr-4">Code: </th>
                     <td class="font-bold">{{$belonging->code}}</td>
                   </tr>
+                    <tr>
+                    <th class="w-24 text-right pr-4">Size: </th>
+                    <td class="font-bold">{{$belonging->size->name}}</td>
+                  </tr>
+                    <tr>
+                    <th class="w-24 text-right pr-4">Type: </th>
+                    <td class="font-bold">{{$belonging->type->name}}</td>
+                  </tr>
                   <tr>
                     <th class="w-24 text-right pr-4">Slot: </th>
                     <td class="font-bold">{{$belonging->slot->name}}</td>
@@ -66,7 +74,7 @@ belongings
                           class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
                         >
                           INSIDE
-                        </span> 
+                        </span>
                         <a href="{{ route('status',['id' => $belonging->id]) }}"><span class="ml-2 text-purple-500 underline"> Change to outside</span></a>
                         @else
                         <span
