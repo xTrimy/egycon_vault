@@ -6,8 +6,8 @@ use App\Http\Controllers\BelongingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SlotController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\HistoryController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HistoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,9 +67,6 @@ Route::middleware(['auth'])->group(function () {
 
   Route::get('/add-user', [UserController::class, 'add'])->name('add-user');
   Route::post('/add-user', [UserController::class, 'store']);
-
-
-
 });
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
