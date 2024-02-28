@@ -62,7 +62,7 @@
           {{ $belonging->phone }}
         </td>
         <td class="px-4 py-3 ">
-        {{ $belonging->visitor->name ?? 'N/A' }}         <!-- threw an error out of nowhere__>
+        {{ \App\Models\User::find($belonging->added_by_id)->name ?? 'N/A' }}         <!-- threw an error out of nowhere-->
 
         </td>
         <td class="px-4 py-3 text-xs">
