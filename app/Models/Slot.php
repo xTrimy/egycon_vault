@@ -7,11 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Slot extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'max'
-    ];
-    
+  protected $fillable = [
+    'name',
+    'max'
+  ];
 }

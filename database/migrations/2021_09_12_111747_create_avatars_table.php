@@ -6,27 +6,27 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateAvatarsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('avatars', function (Blueprint $table) {
-            $table->id();
-            $table->string('image');
-            $table->timestamps();
-        });
-    }
+  /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+  public function up()
+  {
+    Schema::create('avatars', function (Blueprint $table) {
+      $table->id();
+      $table->string('image');
+      $table->timestamps();
+    });
+  }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('avatars');
-    }
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    Schema::dropIfExists('avatars');
+  }
 }

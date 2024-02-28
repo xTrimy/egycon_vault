@@ -29,15 +29,15 @@ Route::get('/tables', function () {
 })->name('tables');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', [DashboardController::class,'index'])->name('home');
+    Route::get('/', [DashboardController::class, 'index'])->name('home');
 
     #Add Belonging
     Route::get('/add', [BelongingController::class, 'add'])->name('add-to-vault');
     Route::post('/add', [BelongingController::class, 'store']);
 
     #Edit Belonging
-    Route::get('/edit/{id}',[BelongingController::class, "edit"])->name('edit');
-    Route::post('/edit/{id}',[BelongingController::class, "update"]);
+    Route::get('/edit/{id}', [BelongingController::class, "edit"])->name('edit');
+    Route::post('/edit/{id}', [BelongingController::class, "update"]);
 
     #View Belonging
     Route::get('/belongings', [BelongingController::class, 'view'])->name('view');
@@ -56,19 +56,26 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/add-slot', [SlotController::class, 'store']);
 
 
-    Route::get('/edit-slot/{id}',[SlotController::class,"edit_slot"])->name('edit_slot');
-    Route::post('/edit-slot/{id}',[SlotController::class,"update_slot"])->name('update');
+    Route::get('/edit-slot/{id}', [SlotController::class, "edit_slot"])->name('edit_slot');
+    Route::post('/edit-slot/{id}', [SlotController::class, "update_slot"])->name('update');
 
     Route::get('/delete-slot/{id}', [SlotController::class, 'delete_slot'])->name('delete_slot');
 
     Route::get('/add-user', [UserController::class, 'add'])->name('add-user');
     Route::post('/add-user', [UserController::class, 'store']);
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> master
 });
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 
+<<<<<<< HEAD
 Route::get('/logout',[LogoutController::class,'logout'])->name('logout');
+=======
+Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
+>>>>>>> master

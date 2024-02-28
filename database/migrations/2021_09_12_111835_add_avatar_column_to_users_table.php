@@ -6,27 +6,27 @@ use Illuminate\Support\Facades\Schema;
 
 class AddAvatarColumnToUsersTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('avatar_id')->nullable()->constrained()->onDelete('set null')->onUpdate('set null');
-        });
-    }
+  /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+  public function up()
+  {
+    Schema::table('users', function (Blueprint $table) {
+      $table->foreignId('avatar_id')->nullable()->constrained()->onDelete('set null')->onUpdate('set null');
+    });
+  }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('avatar_id');
-        });
-    }
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    Schema::table('users', function (Blueprint $table) {
+      $table->dropColumn('avatar_id');
+    });
+  }
 }
