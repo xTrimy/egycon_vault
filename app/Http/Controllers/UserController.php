@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Models\BelongingHistory;
 
 
 
@@ -28,6 +29,14 @@ class UserController extends Controller
       'email' => $request->email,
       'password' => Hash::make($request->password),
     ]);
+      //add action to history
+      BelongingHistory::create([
+        'user_id' => auth()->id(),
+        'item_id' => NULL,
+        'action_type' => 'User Added',
+        'action_date' => now(),
+        'description' => 'Added :'.$request->name,
+      ]);
 
     return redirect()->back()->with('success', 'User created successfully.');
   }
