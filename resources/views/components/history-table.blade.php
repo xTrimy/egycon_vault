@@ -37,7 +37,7 @@
       </td>
       <td class="px-4 py-3 ">{{ $entry->user->name }}</td>
       <td class="px-4 py-3 ">{{ $entry->action_type }}</td>
-      <td class="px-4 py-3 ">{{ $entry->action_date }}</td>
+      <td class="px-4 py-3 ">{{ $entry->action_date->setTimezone('Africa/Cairo')->format('Y-m-d H:i:s') }}</td>
     </tr>
     @endforeach
   </tbody>

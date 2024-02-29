@@ -16,10 +16,12 @@ class BelongingHistory extends Model
     'action_type',
     'action_date',
   ];
+  protected $dates = [
+    'action_date', // Specify the action_date field as a date field
+  ];
 
   public function user()
   {
     return $this->belongsTo(User::class);
   }
-
 }
