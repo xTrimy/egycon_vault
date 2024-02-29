@@ -7,6 +7,7 @@ use App\Models\BelongingSize;
 use App\Models\BelongingType;
 use App\Models\VisitorType;
 use App\Models\Slot;
+use App\Models\BelongingHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Postmark\PostmarkClient;
@@ -99,7 +100,13 @@ class BelongingController extends Controller
 
       ]
     );
-
+    //add action to history
+    BelongingHistory::create([
+      'user_id' => auth()->id(),
+      'item_id' => $belonging->id,
+      'action_type' => 'Item Added',
+      'action_date' => now(),
+    ]);
     return redirect()->back()->with('success', 'Belonging has been added to the Vault! | Belonging Code: ' . $belonging->code);
   }
   public function belonging($id)
@@ -162,7 +169,13 @@ class BelongingController extends Controller
       $belonging->notes = $request->notes;
 
     $belonging->save();
-
+    //add action to history
+    BelongingHistory::create([
+      'user_id' => auth()->id(),
+      'item_id' => $belonging->id,
+      'action_type' => 'Item Updated',
+      'action_date' => now(),
+    ]);
     return redirect()->back()->with('success', 'Belonging has been changed!');
   }
 
@@ -176,6 +189,13 @@ class BelongingController extends Controller
     }
 
     $data->save();
+    //add action to history
+    BelongingHistory::create([
+      'user_id' => auth()->id(),
+      'item_id' => $data->id,
+      'action_type' => 'Status Changed',
+      'action_date' => now(),
+    ]);
     return redirect()->back()->with('success', "Belonging Status changed!");
   }
 
@@ -183,7 +203,13 @@ class BelongingController extends Controller
   {
     $belonging = Belonging::findOrFail($id);
     $belonging->delete();
-
+    //add action to history
+    BelongingHistory::create([
+      'user_id' => auth()->id(),
+      'item_id' => $belonging->id,
+      'action_type' => 'Item Deleted',
+      'action_date' => now(),
+    ]);
     return redirect()->back()->with(["success" => "Belonging has been deleted successfully!"]);
   }
 }
