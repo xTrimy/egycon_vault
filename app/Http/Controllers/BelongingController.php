@@ -7,6 +7,7 @@ use App\Models\BelongingSize;
 use App\Models\BelongingType;
 use App\Models\VisitorType;
 use App\Models\Slot;
+use App\Models\BelongingHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Postmark\PostmarkClient;
@@ -99,7 +100,13 @@ class BelongingController extends Controller
 
       ]
     );
-
+    //add action to history
+    BelongingHistory::create([
+      'user_id' => auth()->id(),
+      'item_id' => $belonging->id,
+      'action_type' => 'Item Added',
+      'action_date' => now(),
+    ]);
     return redirect()->back()->with('success', 'Belonging has been added to the Vault! | Belonging Code: ' . $belonging->code);
   }
   public function belonging($id)
@@ -147,6 +154,23 @@ class BelongingController extends Controller
       "visitor" => "required|exists:visitor_types,id",
     ]);
     $belonging = Belonging::find($belonging);
+
+    // Store the old values before updating
+    $oldValues = [
+      'name' => $belonging->name,
+      'email' => $belonging->email,
+      'phone' => $belonging->phone,
+      'color' => $belonging->color,
+      'status' => $belonging->status,
+      'belonging_type_id' => $belonging->belonging_type_id,
+      'belonging_size_id' => $belonging->belonging_size_id,
+      'visitor_type_id' => $belonging->visitor_type_id,
+      'color_name' => $belonging->color_name,
+      'notes' => $belonging->notes,
+    ];
+
+
+    //update
     $belonging->name = $request->name;
     $belonging->email = $request->email;
     $belonging->phone = $request->phone;
@@ -163,12 +187,31 @@ class BelongingController extends Controller
 
     $belonging->save();
 
+    //generating description by comparing values
+    $description = "";
+    foreach ($oldValues as $key => $oldValue) {
+      $newValue = $belonging->$key;
+      if ($oldValue != $newValue) {
+        $description .= "$key changed from $oldValue to $newValue, \n";
+      }
+    }
+    $description = rtrim($description, ', ');
+
+    //add action to history
+    BelongingHistory::create([
+      'user_id' => auth()->id(),
+      'item_id' => $belonging->id,
+      'action_type' => 'Item Updated',
+      'description' => $description,
+      'action_date' => now(),
+    ]);
     return redirect()->back()->with('success', 'Belonging has been changed!');
   }
 
   public function status($id)
   {
     $data = Belonging::find($id);
+    $oldStatus = $data->status;
     if ($data->status == 1) {
       $data->status = 0;
     } else if ($data->status == 0) {
@@ -176,13 +219,33 @@ class BelongingController extends Controller
     }
 
     $data->save();
+    $oldStatusText = $oldStatus == 1 ? 'inside' : 'outside';
+    $newStatusText = $data->status == 1 ? 'inside' : 'outside';
+    $description = "Status changed from $oldStatusText to $newStatusText";
+
+    //add action to history
+    BelongingHistory::create([
+      'user_id' => auth()->id(),
+      'item_id' => $data->id,
+      'action_type' => 'Status Changed',
+      'description' => $description,
+      'action_date' => now(),
+    ]);
     return redirect()->back()->with('success', "Belonging Status changed!");
   }
 
   public function delete($id)
   {
     $belonging = Belonging::findOrFail($id);
+
+    $historyEntries = BelongingHistory::where('item_id', $belonging->id)->get();
+
+    foreach ($historyEntries as $historyEntry) {
+      $historyEntry->delete();
+    }
+
     $belonging->delete();
+
 
     return redirect()->back()->with(["success" => "Belonging has been deleted successfully!"]);
   }
