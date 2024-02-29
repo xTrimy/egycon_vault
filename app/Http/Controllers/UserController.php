@@ -29,7 +29,6 @@ class UserController extends Controller
       'password' => Hash::make($request->password),
     ]);
 
-    auth()->attempt($request->only('email', 'password'));
     return redirect()->back()->with('success', 'User created successfully.');
   }
 }
