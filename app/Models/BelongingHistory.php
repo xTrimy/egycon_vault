@@ -15,9 +15,10 @@ class BelongingHistory extends Model
     'item_id',
     'action_type',
     'action_date',
+    'description',
   ];
   protected $dates = [
-    'action_date', // Specify the action_date field as a date field
+    'action_date',
   ];
 
   public function user()

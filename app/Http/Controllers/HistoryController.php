@@ -10,7 +10,7 @@ class HistoryController extends Controller
 {
   public function view()
   {
-    $historyEntries = BelongingHistory::all(); // Or you can retrieve history entries as needed
+    $historyEntries = BelongingHistory::orderBy('id', 'DESC')->get();
 
     return view('history', ['historyEntries' => $historyEntries]);
   }
