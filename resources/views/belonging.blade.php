@@ -29,7 +29,7 @@
             </tr>
             <tr>
               <th class="w-24 text-right pr-4">Type: </th>
-              <td>{{ $belonging->visitor->name }}</td>
+              <td>{{ $belonging->visitor->name??"N/A" }}</td>
             </tr>
             <tr>
               <th class="w-24 text-right pr-4">Email: </th>
@@ -53,7 +53,7 @@
             </tr>
             <tr>
               <th class="w-24 text-right pr-4">Slot: </th>
-              <td class="font-bold">{{ $belonging->slot->name }}</td>
+              <td class="font-bold">{{ $belonging->slot->name??"N/A" }}</td>
             </tr>
             <tr>
               <th class="w-24 text-right pr-4">Color: </th>

@@ -249,7 +249,7 @@
                   </svg>
                 </div>
                 <input id="search_input"
-                  class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
+                  class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input dark:focus:bg-gray-800"
                   type="text" placeholder="Search for belonging, person, phone, email, etc..."
                   aria-label="Search" />
                 <div id="search_dropdown"
@@ -352,7 +352,7 @@
                         }
                       }
                     };
-                    xhttp.open("GET", "./api/search?q=" + self.value, true);
+                    xhttp.open("GET", "{{ url('/') }}/api/search?q=" + self.value, true);
                     xhttp.send();
                   });
                   document.body.addEventListener('click', function(e) {

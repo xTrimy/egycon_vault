@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\MailHelpers;
 use App\Models\Belonging;
 use App\Models\BelongingSize;
 use App\Models\BelongingType;
@@ -81,25 +82,6 @@ class BelongingController extends Controller
     $belonging->added_by_id = auth()->id();
 
     $belonging->save();
-    $client = new PostmarkClient(env("POSTMARK_SECRET"));
-    $sendResult = $client->sendEmailWithTemplate(
-      "info@gamerslegacy.net",
-      request('email'),
-      25435508,
-      [
-        "name" => $belonging->name,
-        "code" => $belonging->code,
-        "visitor" => $visitor_type->name,
-        "phone" => $belonging->phone,
-        "color" => $belonging->color_name,
-        "slot" => $slot->name,
-        "type" => $belonging_type->name,
-        "weight" => $belonging_size->name,
-
-
-
-      ]
-    );
     //add action to history
     BelongingHistory::create([
       'user_id' => auth()->id(),
@@ -107,6 +89,19 @@ class BelongingController extends Controller
       'action_type' => 'Item Added',
       'action_date' => now(),
     ]);
+    $data = [];
+    $data['name'] = explode(' ', $belonging->name)[0];
+    $data['email'] = $belonging->email;
+    $data['phone'] = $belonging->phone;
+    $data['status'] = $belonging->status;
+    $data['visitor'] = $visitor_type->name;  
+    $data['type'] = $belonging_type->name;
+    $data['weight'] = $belonging_size->name;
+    $data['code'] = $belonging->code;
+    $data['slot'] = $slot->name;
+    $data['color'] = $belonging->color_name;
+    MailHelpers::send_email($data, $belonging->email, MailHelpers::getRegistrationEmailTemplate());
+
     return redirect()->back()->with('success', 'Belonging has been added to the Vault! | Belonging Code: ' . $belonging->code);
   }
   public function belonging($id)
