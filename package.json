@@ -19,6 +19,9 @@
         "tailwindcss": "^3.4.14"
     },
     "dependencies": {
-        "alpinejs": "^3.3.3"
+        "alpinejs": "^3.3.3",
+        "browser-image-compression": "^2.0.2",
+        "konva": "^9.3.15",
+        "viewerjs": "^1.11.6"
     }
 }

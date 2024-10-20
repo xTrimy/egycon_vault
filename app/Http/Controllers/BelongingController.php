@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\FilesHelper;
 use App\Helpers\MailHelpers;
 use App\Models\Belonging;
 use App\Models\BelongingSize;
@@ -94,7 +95,7 @@ class BelongingController extends Controller
     $data['email'] = $belonging->email;
     $data['phone'] = $belonging->phone;
     $data['status'] = $belonging->status;
-    $data['visitor'] = $visitor_type->name;  
+    $data['visitor'] = $visitor_type->name;
     $data['type'] = $belonging_type->name;
     $data['weight'] = $belonging_size->name;
     $data['code'] = $belonging->code;
@@ -243,5 +244,17 @@ class BelongingController extends Controller
 
 
     return redirect()->back()->with(["success" => "Belonging has been deleted successfully!"]);
+  }
+
+  public function belonging_image($id, Request $request)
+  {
+    $request->validate([
+      'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
+    ]);
+    $belonging = Belonging::find($id);
+    $belonging->image = FilesHelper::compressAndSave($request->image, 'images/belongings', 75);
+    $belonging->save();
+
+    return redirect()->back()->with('success', 'Image has been uploaded successfully!');
   }
 }

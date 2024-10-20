@@ -106,6 +106,11 @@ return [
       'path' => storage_path('logs/emails.log'),
       'level' => env('LOG_LEVEL', 'debug'),
     ],
+    'filelog' => [
+      'driver' => 'single',
+      'path' => storage_path('logs/files.log'),
+      'level' => env('LOG_LEVEL', 'debug'),
+    ],
   ],
 
 ];

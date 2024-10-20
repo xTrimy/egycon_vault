@@ -43,6 +43,7 @@ Route::middleware(['auth'])->group(function () {
   #View Belonging
   Route::get('/belongings', [BelongingController::class, 'view'])->name('view');
   Route::get('/belonging/{id}', [BelongingController::class, 'belonging'])->name('belonging');
+  Route::post('/belonging-image/{id}', [BelongingController::class, 'belonging_image'])->name('belonging-image');
 
   #View Actions History
   Route::get('/history', [HistoryController::class, 'view'])->name('history');
