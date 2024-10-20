@@ -14,6 +14,4 @@ yarn-error.log
 /.idea
 /.vscode
 package-lock.json
-public/css/app.css
-public/js/app.js
 composer.lock
