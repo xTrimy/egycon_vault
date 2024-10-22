@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Belonging extends Model
 {
-  use HasFactory;
+  use HasFactory, Notifiable;
   protected $fillable = [
     'name',
     'email',
@@ -40,5 +41,10 @@ class Belonging extends Model
   public function slot()
   {
     return $this->belongsTo(Slot::class);
+  }
+
+  public function whatsappMessage()
+  {
+    return $this->hasOne(BelongingWhatsappMessage::class);
   }
 }

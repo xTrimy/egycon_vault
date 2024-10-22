@@ -154,6 +154,31 @@ belongings
                 @endif
               </td>
             </tr>
+                        <tr>
+                            <th class="w-24 text-right pr-4">WA Message Status: </th>
+
+                            <td class="font-bold">
+                                @if (!$belonging->whatsappMessage)
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-100">
+                                        N/A
+                                    </span>
+                                @elseif ($belonging->whatsappMessage->isSentSuccessfully())
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                                        Sent
+                                    </span>
+                                @elseif ($belonging->whatsappMessage->isFailed())
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:bg-red-700 dark:text-red-100">
+                                        Failed
+                                    </span>
+                                    <span class="ml-2">
+                                        {{ $belonging->whatsappMessage->failure_reason }}
+                                    </span>
+                                @endif
+                            </td>
+                        </tr>
           </table>
       </div>
     </div>
