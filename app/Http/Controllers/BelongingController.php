@@ -257,4 +257,25 @@ class BelongingController extends Controller
 
     return redirect()->back()->with('success', 'Image has been uploaded successfully!');
   }
+  public function saveDrawing(Request $request, $id)
+  {
+    $belonging = Belonging::findOrFail($id);
+
+    // Decode the base64 image
+    $imageData = $request->input('image');
+    $imageData = str_replace('data:image/png;base64,', '', $imageData);
+    $imageData = str_replace(' ', '+', $imageData);
+    $imageContent = base64_decode($imageData);
+
+    // Save the image to the filesystem
+    $imageName = 'drawing_' . time() . '.png';
+    $imagePath = public_path('images/belongings/' . $imageName);
+    file_put_contents($imagePath, $imageContent);
+
+    // Optionally update the database to store the new image path
+    $belonging->image = $imageName;
+    $belonging->save();
+
+    return response()->json(['success' => true, 'image' => $imageName]);
+  }
 }

@@ -39,6 +39,8 @@ Route::middleware(['auth'])->group(function () {
   #Edit Belonging
   Route::get('/edit/{id}', [BelongingController::class, "edit"])->name('edit');
   Route::post('/edit/{id}', [BelongingController::class, "update"]);
+  Route::post('/belonging/{id}/save-drawing', [BelongingController::class, 'saveDrawing'])->name('belonging-drawing-save');
+
 
   #View Belonging
   Route::get('/belongings', [BelongingController::class, 'view'])->name('view');
