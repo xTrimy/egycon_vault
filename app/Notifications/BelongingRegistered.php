@@ -30,7 +30,7 @@ class BelongingRegistered extends Notification implements Whatsappable, ShouldQu
     public function __construct(Belonging $belonging)
     {
         $this->belonging = $belonging;
-        $this->event_name = "EGYCON Halloween";
+        $this->event_name = "EGYCON Halloween Fiesta";
     }
 
     /**
@@ -78,18 +78,21 @@ class BelongingRegistered extends Notification implements Whatsappable, ShouldQu
         $cardImageUrl = asset($cardImagePath);
         return (new WhatsappMessage)
             ->greeting('Hello, ' . explode(' ', $notifiable->name)[0])
-            ->subject("We are pleased to be with you today at {$this->event_name}")
+            ->subject("We are delighted to be with you today at {$this->event_name}")
             ->line("\n")
-            ->line('You have registered your belonging')
+            ->line('When you register at the Lockers Office, you are provided with a code for your belongings slot.')
+            ->line('When you get back, please show us this code to retrieve your belongings.')
             ->separator()
             ->line("Your code is: " . $this->belonging->code)
-            ->line("Please show this code to the event staff to retrieve your belonging.")
+            ->line("Please show this code to the event staff to retrieve your belongings.")
             ->separator()
-            ->line("Your belonging details:")
+            ->line("Registered Details:")
             ->line('Name: ' . $this->belonging->name)
             ->line('Email: ' . $this->belonging->email)
             ->line('Phone: ' . $this->belonging->phone)
             ->line('Color: ' . $this->belonging->color_name)
+            ->line('Type: ' . $this->belonging->type->name)
+            ->line('Belonging Size: ' . $this->belonging->size->name)
             ->line('Date: ' . $this->belonging->created_at)
             ->separator()
             ->image($cardImageUrl)
