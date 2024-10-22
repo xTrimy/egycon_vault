@@ -95,6 +95,11 @@
                             class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:bg-red-700 dark:text-red-100">
                             Failed
                         </span>
+                    @else
+                        <span
+                            class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-100">
+                            N/A
+                        </span>
                     @endif
                 </td>
                 <td title="{{ $belonging->created_at }}" class="px-4 py-3 text-sm">
