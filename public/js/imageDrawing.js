@@ -29,11 +29,15 @@ document.addEventListener('DOMContentLoaded', function () {
   function stopDrawing() {
     drawing = false;
   }
+  Node.prototype.addEventListeners = function (eventNames, eventFunction) {
+    for (eventName of eventNames.split(' '))
+      this.addEventListener(eventName, eventFunction);
+  }
 
-  canvas.addEventListener('mousedown', startDrawing);
-  canvas.addEventListener('mousemove', draw);
-  canvas.addEventListener('mouseup', stopDrawing);
-  canvas.addEventListener('mouseout', stopDrawing);
+  canvas.addEventListeners('mousedown touchstart', startDrawing);
+  canvas.addEventListeners('mousemove touchmove', draw);
+  canvas.addEventListeners('mouseup touchend', stopDrawing);
+  canvas.addEventListeners('mouseout touchcancel', stopDrawing);
 
   saveDrawingButton.addEventListener('click', function () {
     enableDisableDrawing(false);
