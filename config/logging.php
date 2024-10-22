@@ -111,6 +111,11 @@ return [
       'path' => storage_path('logs/files.log'),
       'level' => env('LOG_LEVEL', 'debug'),
     ],
+    'whatsapp' => [
+      'driver' => 'daily',
+      'path' => storage_path('logs/whatsapp.log'),
+      'level' => env('LOG_LEVEL', 'debug'),
+    ],
   ],
 
 ];

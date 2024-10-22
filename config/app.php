@@ -1,6 +1,10 @@
 <?php
 
+use App\NotificationChannels\WhatsappChannel;
+
 return [
+
+  'enable_whatsapp_notifications' => (bool) env('ENABLE_WHATSAPP_NOTIFICATIONS', false),
 
   /*
     |--------------------------------------------------------------------------
@@ -228,7 +232,7 @@ return [
     'URL' => Illuminate\Support\Facades\URL::class,
     'Validator' => Illuminate\Support\Facades\Validator::class,
     'View' => Illuminate\Support\Facades\View::class,
-
+    'whatsapp' => WhatsappChannel::class,
   ],
 
 ];

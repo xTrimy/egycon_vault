@@ -10,6 +10,7 @@ use App\Models\BelongingType;
 use App\Models\VisitorType;
 use App\Models\Slot;
 use App\Models\BelongingHistory;
+use App\Notifications\BelongingRegistered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Postmark\PostmarkClient;
@@ -34,7 +35,7 @@ class BelongingController extends Controller
 
   public function view()
   {
-    $belongings = Belonging::with('size')->with('type')->with('slot')->orderBy('id', 'DESC')->get();
+    $belongings = Belonging::with('whatsappMessage')->with('size')->with('type')->with('slot')->orderBy('id', 'DESC')->get();
     return view('belongings', ['belongings' => $belongings]);
   }
 
@@ -102,7 +103,7 @@ class BelongingController extends Controller
     $data['slot'] = $slot->name;
     $data['color'] = $belonging->color_name;
     MailHelpers::send_email($data, $belonging->email, MailHelpers::getRegistrationEmailTemplate());
-
+    $belonging->notify(new BelongingRegistered($belonging));
     return redirect()->back()->with('success', 'Belonging has been added to the Vault! | Belonging Code: ' . $belonging->code);
   }
   public function belonging($id)
@@ -111,6 +112,7 @@ class BelongingController extends Controller
       ->with('slot')
       ->with('size')
       ->with('type')
+      ->with('whatsappMessage')
       ->first();
     return view('belonging', ['belonging' => $belonging]);
   }
