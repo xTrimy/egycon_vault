@@ -33,7 +33,9 @@ class WhatsappService
         } else {
             throw new InvalidArgumentException("Invalid phone number");
         }
-        $this->url = "https://my.wpileti.com/api/";
+        $this->url = "https://waapi.app/api/v1/instances/{id}/client/";
+        $instance_id = env('WHATSAPP_INSTANCE_ID');
+        $this->url = str_replace("{id}", $instance_id, $this->url);
         $this->phone = $phone;
         $this->belonging_id = $belonging_id;
     }
@@ -57,17 +59,18 @@ class WhatsappService
             return $data;
         }
         $body = array(
-            'api_key' => $this->API_KEY,
-            'receiver' => $this->phone,
-            'data' => $data
+            'chat_id' => $this->phone,
         );
-        $url .= $method;
+
+        $body = array_merge($body, $data);
+
+        $url .= "action/$method";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json', 'Accept: */*']);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json', 'Accept: */*', 'Authorization: Bearer ' . $this->API_KEY]);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($body));
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $res = curl_exec($ch);
@@ -123,9 +126,9 @@ class WhatsappService
     public function sendImage($text, $media_url)
     {
         $data = array(
-            "url" => $media_url,
+            "mediaUrl" => $media_url,
             'media_type' => 'image',
-            'caption' => $text
+            'mediaCaption' => $text
         );
         return $this->bot('send-media', $data);
     }
