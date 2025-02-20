@@ -30,7 +30,7 @@ class BelongingRegistered extends Notification implements Whatsappable, ShouldQu
     public function __construct(Belonging $belonging)
     {
         $this->belonging = $belonging;
-        $this->event_name = "EGYCON Halloween Fiesta";
+        $this->event_name = "EGYCON 12";
     }
 
     /**
@@ -96,7 +96,7 @@ class BelongingRegistered extends Notification implements Whatsappable, ShouldQu
             ->line('Date: ' . $this->belonging->created_at)
             ->separator()
             ->image($cardImageUrl)
-            ->line("Powered by: Gamers Legacy")
-            ->line("More info: https://glegacy.me");
+            ->line("Powered by: LGSY.GG")
+            ->line("More info: https://lgsy.gg");
     }
 }
