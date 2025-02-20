@@ -59,7 +59,7 @@ class WhatsappService
             return $data;
         }
         $body = array(
-            'chat_id' => $this->phone,
+            'chatId' => $this->phone,
         );
 
         $body = array_merge($body, $data);
