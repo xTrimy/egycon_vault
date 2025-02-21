@@ -18,35 +18,35 @@ use Postmark\Models\PostmarkException;
 use stdClass;
 use Illuminate\Support\Facades\Log;
 
-final class MailHelpers 
+final class MailHelpers
 {
     private static $subjects = [
         "registration" => "Hey {{name}}! Your belonging has been registered. Code: {{code}}",
     ];
 
 
-    public static function send_email($data, $email, $email_template = null){
+    public static function send_email($data, $email, $email_template = null)
+    {
 
-        if($email_template != null){
+        if ($email_template != null) {
             $body = $email_template->getBody();
             $subject = $email_template->getSubject();
-            foreach($data as $key => $value){
+            foreach ($data as $key => $value) {
                 $body = str_replace("{{" . $key . "}}", $value, $body);
                 $subject = str_replace("{{" . $key . "}}", $value, $subject);
             }
             $message = MailMessage::builder()
-                ->to(new Recipient($email, $data["name"]?? "N/A"))
-                ->from(new Sender("egycon@gamerslegacy.net", "EGYCON"))
+                ->to(new Recipient($email, $data["name"] ?? "N/A"))
+                ->from(new Sender("info@lgsy.gg", "LGSY"))
                 ->subject($subject)
                 ->htmlBody($body)
                 ->trackOpens(true)
-                ->reference("Vault @ EGYCON Halloween")
-                ->tag("Vault @ EGYCON Halloween")
+                ->reference("Vault @ EGYCON 12")
+                ->tag("Vault @ EGYCON 12")
                 ->build();
-            
+
             $sendResult = self::sendEmail($message);
         }
-    
     }
 
 
@@ -57,26 +57,28 @@ final class MailHelpers
      * @throws Exception
      * @throws PostmarkException
      */
-    public static function sendEmail(MailMessage $message){
-        if(env('ENABLE_EMAIL_SENDING', false) == false) {
+    public static function sendEmail(MailMessage $message)
+    {
+        if (env('ENABLE_EMAIL_SENDING', false) == false) {
             Log::channel('emails')->info(
                 "Email Sending is Disabled."
-                . PHP_EOL
-                ."Email To Send:". 
-                json_encode($message)
+                    . PHP_EOL
+                    . "Email To Send:" .
+                    json_encode($message)
             );
             return null;
         }
-        if(env('ENABLE_POSTMARK_EMAILS', false) == true){
+        if (env('ENABLE_POSTMARK_EMAILS', false) == true) {
             return self::sendPostMarkEmail($message);
-        } else if(env('ENABLE_ZEPTO_EMAILS', true) == true){
+        } else if (env('ENABLE_ZEPTO_EMAILS', true) == true) {
             return self::sendZeptoMailEmail($message);
-        }else{
+        } else {
             throw new MailException("No Email Service is enabled", 500);
         }
-    } 
+    }
 
-    public static function sendZeptoMailEmail(MailMessage $message){
+    public static function sendZeptoMailEmail(MailMessage $message)
+    {
         $array_message = [
             'to' => $message->getToZepto(),
             'from' => $message->getFrom(),
@@ -94,9 +96,10 @@ final class MailHelpers
         }
     }
 
-    public static function sendPostMarkEmail(MailMessage $message){
+    public static function sendPostMarkEmail(MailMessage $message)
+    {
         $array_message = [];
-        foreach($message->getTo() as $recipient){
+        foreach ($message->getTo() as $recipient) {
             $array_message[] = [
                 'To' => $recipient->getEmail(),
                 'From' => $message->getFrom()->getEmail(),
@@ -130,15 +133,16 @@ final class MailHelpers
             // was unreachable or times out.
         }
     }
-    public static function getEmailTemplate($type){
+    public static function getEmailTemplate($type)
+    {
         $type = strtolower($type);
         if (!in_array($type, ['registration'])) {
-            throw new WrongValueException("Invalid Email Template Type: ". $type);
+            throw new WrongValueException("Invalid Email Template Type: " . $type);
         }
         $email_template = new EmailTemplate(self::$subjects[$type], file_get_contents(public_path("emails/$type.html")));
         return $email_template;
     }
- 
+
     public static function getRegistrationEmailTemplate()
     {
         return self::getEmailTemplate('registration');
