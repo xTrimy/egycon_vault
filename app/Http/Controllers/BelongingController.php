@@ -104,7 +104,7 @@ class BelongingController extends Controller
     $data['color'] = $belonging->color_name;
     MailHelpers::send_email($data, $belonging->email, MailHelpers::getRegistrationEmailTemplate());
     $belonging->notify(new BelongingRegistered($belonging));
-    return redirect()->back()->with('success', 'Belonging has been added to the Vault! | Belonging Code: ' . $belonging->code);
+    return redirect()->back()->with('success', 'Belonging has been added to the Vault! | Belonging Code: ' . $belonging->code . " - <a style='color:blue;' href='" . route('belonging', ['id' => $belonging->id]) . "' target='_blank'> Belonging Page </a>");
   }
   public function belonging($id)
   {
